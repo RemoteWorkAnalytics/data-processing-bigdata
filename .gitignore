@@ -1,0 +1,18 @@
+# Scala / sbt
+target/
+project/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Metals / BSP
+.metals/
+.bsp/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
