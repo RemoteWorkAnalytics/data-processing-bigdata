@@ -36,11 +36,11 @@ services:
       - -c
       - |
         echo "Waiting for Kafka to be fully ready..."
-        sleep 10
-        kafka-topics --create --if-not-exists --topic raw-data-topic --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092
-        kafka-topics --create --if-not-exists --topic validated-data-topic --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092
-        kafka-topics --create --if-not-exists --topic processed-data-topic --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092
-        echo "All topics created successfully."
+        sleep 15
+        kafka-topics --create --if-not-exists --topic employee-raw-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092
+        kafka-topics --create --if-not-exists --topic employee-mental-health-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092
+        kafka-topics --create --if-not-exists --topic employee-productivity-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092
+        echo "All employee topics created successfully."
     environment:
 
       KAFKA_BROKER_LIST: kafka:9092
