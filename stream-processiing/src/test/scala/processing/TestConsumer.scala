@@ -12,9 +12,10 @@ object TestConsumer extends App {
   props.put("group.id", "test-group")
   props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
   props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+  props.put("auto.offset.reset", "earliest")
 
   val consumer = new KafkaConsumer[String, String](props)
-  consumer.subscribe(Arrays.asList("test-topic"))
+  consumer.subscribe(Arrays.asList("validated-data-topic"))
 
   println("Waiting for messages...")
 
