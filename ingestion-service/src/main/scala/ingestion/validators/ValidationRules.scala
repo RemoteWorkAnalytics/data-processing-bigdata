@@ -7,9 +7,9 @@ object ValidationRules {
     val genderValid = Set("Male", "Female", "Non-binary", "Prefer not to say").contains(employee.gender)
     val stressValid = Set("Low", "Medium", "High").contains(employee.stressLevel)
     val productivityValid = Set("Increase", "Decrease", "No Change").contains(employee.productivityChange)
-    val workLifeBalanceValid = employee.workLifeBalanceRating.matches("[1-5]") // أو Int بين 1 و5
+    val workLifeBalanceValid = employee.workLifeBalanceRating.matches("[1-5]")
     val variantValid = employee.variantIndex >= 0
-    val recordDateValid = employee.recordDate.nonEmpty // ممكن تتحقق من format بالتاريخ إذا أحببت
+    val recordDateValid = employee.recordDate.nonEmpty
 
     employee.employeeId.nonEmpty &&
       employee.age > 0 &&

@@ -48,12 +48,12 @@ object Employee {
       "socialIsolationRating" -> emp.socialIsolationRating,
       "satisfactionWithRemoteWork" -> emp.satisfactionWithRemoteWork,
       "companySupportForRemoteWork" -> emp.companySupportForRemoteWork,
-      "physicalActivity" -> emp.physicalActivity,
-      "sleepQuality" -> emp.sleepQuality,
-      "region" -> emp.region,
-      "variantIndex" -> emp.variantIndex,
-      "recordDate" -> emp.recordDate,
-      "generatedNote" -> emp.generatedNote
+    "physicalActivity" -> emp.physicalActivity,
+    "sleepQuality" -> emp.sleepQuality,
+    "region" -> emp.region,
+    "variantIndex" -> emp.variantIndex,
+    "recordDate" -> emp.recordDate,
+    "generatedNote" -> emp.generatedNote
     )
   }
 }
