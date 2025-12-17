@@ -2,6 +2,8 @@ package ingestion
 
 import ingestion.readers.CsvReader
 import ingestion.validators.ValidationRules
+import ingestion.kafka.KafkaProducerService
+
 
 import ch.qos.logback.classic.{Level, Logger}
 import org.slf4j.LoggerFactory
@@ -14,5 +16,6 @@ object MainIngestion extends App {
 
   val employeeIterator = CsvReader.readEmployeesIterator(filePath)
   val validIterator = employeeIterator.filter(ValidationRules.isValid)
+  KafkaProducerService.sendStream(topic, validIterator)
 
 }
