@@ -13,6 +13,6 @@ object MainIngestion extends App {
   val topic = "employee-raw-stream"
 
   val employeeIterator = CsvReader.readEmployeesIterator(filePath)
-  val validIterator = employeeIterator.filter(ValidationRules.isValid) // فرضًا isValid موجود
+  val validIterator = employeeIterator.filter(ValidationRules.isValid)
 
 }
