@@ -21,6 +21,7 @@ object RawKafkaConsumer {
       .option("kafka.bootstrap.servers", "localhost:9092")
       .option("subscribe", "employee-raw-stream")
       .option("startingOffsets", "earliest")
+      .option("failOnDataLoss", "false")
       .load()
 
     val rawDF = kafkaDF.selectExpr("CAST(value AS STRING)").as[String]
