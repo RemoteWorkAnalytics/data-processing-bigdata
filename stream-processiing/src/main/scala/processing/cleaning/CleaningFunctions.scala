@@ -18,15 +18,35 @@ object SparkCleaning {
         when(df(colName) === key, value).otherwise(colExpr)
       }
 
-    df
-      .withColumn("stressLevelInt", mapColumn("stressLevel", stressMap))
-      .withColumn("productivityChangeInt", mapColumn("productivityChange", productivityMap))
-      .withColumn("workLocationInt", mapColumn("workLocation", workLocationMap))
-      .withColumn("physicalActivityInt", mapColumn("physicalActivity", physicalActivityMap))
-      .withColumn("sleepQualityInt", mapColumn("sleepQuality", sleepQualityMap))
+    val cleanedDF = df
+
+      .withColumn("stressLevelInt", when(col("stressLevel").isNotNull, mapColumn("stressLevel", stressMap)).otherwise(lit(0)))
+      .withColumn("productivityChangeInt", when(col("productivityChange").isNotNull, mapColumn("productivityChange", productivityMap)).otherwise(lit(0)))
+      .withColumn("workLocationInt", when(col("workLocation").isNotNull, mapColumn("workLocation", workLocationMap)).otherwise(lit(0)))
+      .withColumn("physicalActivityInt", when(col("physicalActivity").isNotNull, mapColumn("physicalActivity", physicalActivityMap)).otherwise(lit(0)))
+      .withColumn("sleepQualityInt", when(col("sleepQuality").isNotNull, mapColumn("sleepQuality", sleepQualityMap)).otherwise(lit(0)))
+
+      // cast للأعمدة الرقمية
       .withColumn("workLifeBalanceRatingInt", col("workLifeBalanceRating").cast("int"))
       .withColumn("socialIsolationRatingInt", col("socialIsolationRating").cast("int"))
       .withColumn("satisfactionWithRemoteWorkInt", col("satisfactionWithRemoteWork").cast("int"))
       .withColumn("companySupportForRemoteWorkInt", col("companySupportForRemoteWork").cast("int"))
+
+      .na.fill(Map(
+        "workLifeBalanceRatingInt" -> 0,
+        "socialIsolationRatingInt" -> 0,
+        "satisfactionWithRemoteWorkInt" -> 0,
+        "companySupportForRemoteWorkInt" -> 0
+      ))
+
+
+      .filter(
+        col("employeeId").isNotNull &&
+          col("age").isNotNull &&
+          col("yearsOfExperience").isNotNull &&
+          col("hoursWorkedPerWeek").isNotNull
+      )
+
+    cleanedDF
   }
 }
