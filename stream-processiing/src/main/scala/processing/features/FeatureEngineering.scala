@@ -26,7 +26,6 @@ object FeatureEngineering {
     spark.sparkContext.setLogLevel("WARN")
     import spark.implicits._
 
-    // ===== قراءة البيانات من Kafka =====
     val kafkaDF = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
@@ -66,10 +65,8 @@ object FeatureEngineering {
       .select(from_json($"value", schema).as("data"))
       .select("data.*")
 
-    // ===== تنظيف البيانات =====
     val cleanedDF = SparkCleaning.clean(parsedDF)
 
-    // ===== Feature Engineering =====
     val feDF = cleanedDF
       .withColumn("stressProductivityScore", $"productivityChangeInt" - $"stressLevelInt")
       .withColumn(
@@ -92,8 +89,32 @@ object FeatureEngineering {
       .outputMode("append")
       .start()
 
-    // ===== MongoDB =====
-    val mongoQuery = feDF.writeStream
+    val finalDF = feDF.select(
+      $"employeeId",
+      $"age",
+      $"gender",
+      $"jobRole",
+      $"industry",
+      $"yearsOfExperience",
+      $"hoursWorkedPerWeek",
+      $"region",
+      $"variantIndex",
+      $"recordDate",
+      $"stressLevelInt",
+      $"productivityChangeInt",
+      $"workLocationInt",
+      $"physicalActivityInt",
+      $"sleepQualityInt",
+      $"workLifeBalanceRatingInt",
+      $"socialIsolationRatingInt",
+      $"satisfactionWithRemoteWorkInt",
+      $"companySupportForRemoteWorkInt",
+      $"stressProductivityScore",
+      $"overallWellbeingScore",
+      $"remoteWorkEffectiveness"
+    )
+
+    val mongoQuery = finalDF.writeStream
       .foreachBatch { (batchDF: DataFrame, _: Long) =>
         batchDF.write
           .format("mongodb")
@@ -107,7 +128,6 @@ object FeatureEngineering {
       .trigger(Trigger.ProcessingTime("10 seconds"))
       .start()
 
-    // ===== Kafka Features Stream =====
     val kafkaFeaturesQuery = feDF
       .select(to_json(struct(col("*"))).alias("value"))
       .writeStream
