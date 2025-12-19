@@ -51,6 +51,7 @@ services:
         kafka-topics --create --if-not-exists --topic employee-productivity-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:29092
         kafka-topics --create --if-not-exists --topic employee-processed-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:29092
         kafka-topics --create --if-not-exists --topic employee-cleaned-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:29092
+        kafka-topics --create --if-not-exists --topic employee-workmode-impact-stream --partitions 1 --replication-factor 1 --bootstrap-server kafka:29092
         
         echo "All employee topics created successfully."
 
