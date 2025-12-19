@@ -133,10 +133,10 @@ object FeatureEngineering {
       .writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("topic", "employee-features-stream")
+      .option("topic", "employee-processed-stream")
       .option("checkpointLocation", "C:/spark-checkpoints/employee-features")
       .outputMode("append")
-      .trigger(Trigger.ProcessingTime("10 seconds"))
+      .trigger(Trigger.ProcessingTime("20 seconds"))
       .start()
 
     consoleQuery.awaitTermination()
