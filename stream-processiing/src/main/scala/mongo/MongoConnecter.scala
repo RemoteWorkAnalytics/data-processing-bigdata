@@ -1,7 +1,6 @@
 package mongo
 
 import org.apache.spark.sql.{SparkSession, DataFrame}
-import com.mongodb.spark.sql._
 
 object MongoConnection {
 
