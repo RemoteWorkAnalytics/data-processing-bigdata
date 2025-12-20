@@ -14,7 +14,6 @@ object WorkLocationImpact {
     .add("stressProductivityScore", DoubleType)
     .add("stressLevelInt", DoubleType)
     .add("productivityChangeInt", DoubleType)
-    .add("recordDate", StringType)
 
   def main(args: Array[String]): Unit = {
 
@@ -38,13 +37,12 @@ object WorkLocationImpact {
       .selectExpr("CAST(value AS STRING)")
       .select(from_json($"value", schema).as("data"))
       .select("data.*")
-      .withColumn("recordDate", to_date($"recordDate"))
 
     // -----------------------------
     // Aggregation by work location
     // -----------------------------
     val aggDF = sourceDF
-      .groupBy($"recordDate", $"workLocation")
+      .groupBy( $"workLocation")
       .agg(
         count("*").alias("totalEmployees"),
         round(avg($"overallWellbeingScore"), 3).alias("overallWellbeing"),

@@ -7,7 +7,7 @@ import ingestion.kafka.models.Employee
 
 object KafkaProducerService {
 
-  // We can lower this to 100 for a better "streaming" feel during simulation
+
   val batchSize = 100
 
   private def createProducer(): KafkaProducer[String, String] = {
@@ -37,16 +37,14 @@ object KafkaProducerService {
         producer.send(record)
         println(s"Sent Employee ID: ${emp.employeeId}")
 
-        // 1. SMALL SLEEP: Wait 100ms between each record
-        // This simulates a slow flow of 10 employees per second
+
         Thread.sleep(100)
       }
 
       producer.flush()
       println(s"--- Batch of ${batch.size} employees sent to Kafka. ---")
 
-      // 2. BATCH SLEEP: Wait 2 seconds after flushing the batch
-      // This gives Spark time to process its 10-second Trigger
+
       Thread.sleep(2000)
     }
 
