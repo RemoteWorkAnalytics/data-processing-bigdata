@@ -7,7 +7,8 @@ import ingestion.kafka.models.Employee
 
 object KafkaProducerService {
 
-  val batchSize = 500
+
+  val batchSize = 100
 
   private def createProducer(): KafkaProducer[String, String] = {
     val props = new Properties()
@@ -35,10 +36,16 @@ object KafkaProducerService {
 
         producer.send(record)
         println(s"Sent Employee ID: ${emp.employeeId}")
+
+
+        Thread.sleep(100)
       }
 
       producer.flush()
-      println(s"Batch of ${batch.size} employees sent to Kafka.")
+      println(s"--- Batch of ${batch.size} employees sent to Kafka. ---")
+
+
+      Thread.sleep(2000)
     }
 
     producer.close()
