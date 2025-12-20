@@ -5,13 +5,10 @@ import play.api.libs.json.{Json, Writes, JsValue}
 case class Employee(
                      employeeId: String,
                      age: Int,
-                     gender: String,
-                     jobRole: String,
                      industry: String,
                      yearsOfExperience: Int,
                      workLocation: String,
                      hoursWorkedPerWeek: Int,
-                     numberOfVirtualMeetings: Int,
                      workLifeBalanceRating: String,
                      stressLevel: String,
                      mentalHealthCondition: String,
@@ -22,10 +19,8 @@ case class Employee(
                      companySupportForRemoteWork: String,
                      physicalActivity: String,
                      sleepQuality: String,
-                     region: String,
-                     variantIndex: Int,
                      recordDate: String,
-                     generatedNote: String
+
                    )
 
 object Employee {
@@ -33,13 +28,11 @@ object Employee {
     def writes(emp: Employee): JsValue = Json.obj(
       "employeeId" -> emp.employeeId,
       "age" -> emp.age,
-      "gender" -> emp.gender,
-      "jobRole" -> emp.jobRole,
+
       "industry" -> emp.industry,
       "yearsOfExperience" -> emp.yearsOfExperience,
       "workLocation" -> emp.workLocation,
       "hoursWorkedPerWeek" -> emp.hoursWorkedPerWeek,
-      "numberOfVirtualMeetings" -> emp.numberOfVirtualMeetings,
       "workLifeBalanceRating" -> emp.workLifeBalanceRating,
       "stressLevel" -> emp.stressLevel,
       "mentalHealthCondition" -> emp.mentalHealthCondition,
@@ -50,10 +43,7 @@ object Employee {
       "companySupportForRemoteWork" -> emp.companySupportForRemoteWork,
     "physicalActivity" -> emp.physicalActivity,
     "sleepQuality" -> emp.sleepQuality,
-    "region" -> emp.region,
-    "variantIndex" -> emp.variantIndex,
     "recordDate" -> emp.recordDate,
-    "generatedNote" -> emp.generatedNote
     )
   }
 }

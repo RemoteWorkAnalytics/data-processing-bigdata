@@ -25,7 +25,9 @@ object WorkLocationImpact {
 
     import spark.implicits._
 
-
+    // -----------------------------
+    // Kafka stream
+    // -----------------------------
     val sourceDF = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
@@ -36,7 +38,9 @@ object WorkLocationImpact {
       .select(from_json($"value", schema).as("data"))
       .select("data.*")
 
-
+    // -----------------------------
+    // Aggregation by work location
+    // -----------------------------
     val aggDF = sourceDF
       .groupBy( $"workLocation")
       .agg(
@@ -51,18 +55,20 @@ object WorkLocationImpact {
 
     val query = aggDF.writeStream
       .format("console")
-      .outputMode("complete")
-      .option("truncate", "false")
+      .outputMode("complete") // مهم: عند aggregation لازم "complete" mode
+      .option("truncate", "false") // لتظهر كل البيانات بدون اختصار
       .start()
 
-
+    // -----------------------------
+    // Write to MongoDB
+    // -----------------------------
 
     val query1 = aggDF.writeStream
       .format("mongodb")
       .option("database", "analytics")
       .option("collection", "worklocation_impact")
-      .outputMode("complete")
-      .option("checkpointLocation", "checkpoints/worklocation_impact")
+      .outputMode("complete") // مهم: MongoDB لا يدعم "update" في streaming
+      .option("checkpointLocation", "checkpoints/worklocation_impactlll")
       .start()
 
     query.awaitTermination()

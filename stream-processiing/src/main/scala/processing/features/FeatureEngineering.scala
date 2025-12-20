@@ -39,13 +39,10 @@ object FeatureEngineering {
     val schema = new StructType()
       .add("employeeId", StringType)
       .add("age", IntegerType)
-      .add("gender", StringType)
-      .add("jobRole", StringType)
       .add("industry", StringType)
       .add("yearsOfExperience", IntegerType)
       .add("workLocation", StringType)
       .add("hoursWorkedPerWeek", IntegerType)
-      .add("numberOfVirtualMeetings", IntegerType)
       .add("workLifeBalanceRating", StringType)
       .add("stressLevel", StringType)
       .add("mentalHealthCondition", StringType)
@@ -56,10 +53,8 @@ object FeatureEngineering {
       .add("companySupportForRemoteWork", StringType)
       .add("physicalActivity", StringType)
       .add("sleepQuality", StringType)
-      .add("region", StringType)
-      .add("variantIndex", IntegerType)
       .add("recordDate", StringType)
-      .add("generatedNote", StringType)
+
 
     val parsedDF = rawDF
       .select(from_json($"value", schema).as("data"))
@@ -92,13 +87,9 @@ object FeatureEngineering {
     val finalDF = feDF.select(
       $"employeeId",
       $"age",
-      $"gender",
-      $"jobRole",
       $"industry",
       $"yearsOfExperience",
       $"hoursWorkedPerWeek",
-      $"region",
-      $"variantIndex",
       $"recordDate",
       $"stressLevelInt",
       $"productivityChangeInt",
@@ -120,7 +111,7 @@ object FeatureEngineering {
       .writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("topic", "employee-features-stream")
+      .option("topic", "employee-processed-stream")
       .option("checkpointLocation", "checkpoint/employee-features")
       .outputMode("append")
       .trigger(Trigger.ProcessingTime("10 seconds"))
