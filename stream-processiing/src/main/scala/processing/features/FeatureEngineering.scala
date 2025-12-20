@@ -114,33 +114,19 @@ object FeatureEngineering {
       $"remoteWorkEffectiveness"
     )
 
-    val mongoQuery = finalDF.writeStream
-      .foreachBatch { (batchDF: DataFrame, _: Long) =>
-        batchDF.write
-          .format("mongodb")
-          .option("uri", mongoUri)
-          .option("database", mongoDatabase)
-          .option("collection", mongoCollection)
-          .mode("append")
-          .save()
-      }
-      .outputMode("append")
-      .trigger(Trigger.ProcessingTime("10 seconds"))
-      .start()
 
     val kafkaFeaturesQuery = feDF
       .select(to_json(struct(col("*"))).alias("value"))
       .writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("topic", "employee-processed-stream")
-      .option("checkpointLocation", "C:/spark-checkpoints/employee-features")
+      .option("topic", "employee-features-stream")
+      .option("checkpointLocation", "checkpoint/employee-features")
       .outputMode("append")
-      .trigger(Trigger.ProcessingTime("20 seconds"))
+      .trigger(Trigger.ProcessingTime("10 seconds"))
       .start()
 
     consoleQuery.awaitTermination()
-    mongoQuery.awaitTermination()
     kafkaFeaturesQuery.awaitTermination()
   }
 }
