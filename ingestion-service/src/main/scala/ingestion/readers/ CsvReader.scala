@@ -14,13 +14,10 @@ object CsvReader {
       Employee(
         employeeId = row("Employee_ID"),
         age = row("Age").toInt,
-        gender = row("Gender"),
-        jobRole = row("Job_Role"),
         industry = row("Industry"),
         yearsOfExperience = row("Years_of_Experience").toInt,
         workLocation = row("Work_Location"),
         hoursWorkedPerWeek = row("Hours_Worked_Per_Week").toInt,
-        numberOfVirtualMeetings = row("Number_of_Virtual_Meetings").toInt,
         workLifeBalanceRating = row("Work_Life_Balance_Rating"),
         stressLevel = row("Stress_Level"),
         mentalHealthCondition = row("Mental_Health_Condition"),
@@ -31,10 +28,7 @@ object CsvReader {
         companySupportForRemoteWork = row("Company_Support_for_Remote_Work"),
         physicalActivity = row("Physical_Activity"),
         sleepQuality = row("Sleep_Quality"),
-        region = row("Region"),
-        variantIndex = row("Variant_Index").toInt,
-        recordDate = row("Record_Date"),
-        generatedNote = row("Generated_Note")
+        recordDate = row("Record_Date")
       )
     }
   }
