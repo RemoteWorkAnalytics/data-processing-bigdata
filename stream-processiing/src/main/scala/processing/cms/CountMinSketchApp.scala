@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 object CountMinSketchApp {
 
   private lazy val mongoClient: MongoClient = MongoClients.create("mongodb://127.0.0.1:27017")
-  private val DB_NAME = "employeeAnalyticsDB"
+  private val DB_NAME = "analytics"
   private val COLLECTION_NAME = "cmsDashboard"
 
   private val EPSILON = 0.001
