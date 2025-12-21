@@ -77,7 +77,7 @@ object FeatureEngineering {
         $"satisfactionWithRemoteWorkInt" + $"companySupportForRemoteWorkInt"
       )
 
-    // ===== Console Output =====
+
     val consoleQuery = feDF.writeStream
       .format("console")
       .option("truncate", false)
