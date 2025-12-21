@@ -14,7 +14,7 @@ object WorkLocationImpact {
     .add("stressProductivityScore", DoubleType)
     .add("stressLevelInt", DoubleType)
     .add("productivityChangeInt", DoubleType)
-    .add("accessToMentalHealthResources", StringType) // Yes / No
+    .add("accessToMentalHealthResources", StringType)
 
   def main(args: Array[String]): Unit = {
 

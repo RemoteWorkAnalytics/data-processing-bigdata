@@ -7,7 +7,11 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql" % "3.5.0",
   "org.apache.spark" %% "spark-streaming" % "3.5.0",
   "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.5.0",
-  "org.mongodb.scala" %% "mongo-scala-driver" % "4.10.0",
-  "ch.qos.logback" % "logback-classic" % "1.2.11"
+  "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.5.0",
+
+  "org.mongodb.spark" %% "mongo-spark-connector" % "10.4.0",
+  "ch.qos.logback" % "logback-classic" % "1.2.13",
+  "org.apache.spark" %% "spark-mllib" % "3.5.1",
+
 
 )
