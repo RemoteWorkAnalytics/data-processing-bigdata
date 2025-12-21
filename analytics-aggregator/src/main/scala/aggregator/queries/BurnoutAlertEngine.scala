@@ -9,8 +9,8 @@ object BurnoutAlertEngine {
 
   private val MONGO_URI = "mongodb://localhost:27017"
   private val DB_NAME = "analytics"
-  private val COLLECTION_NAME = "dept_burnout_alerts"
-  private val CHECKPOINT_PATH = "checkpoints/burnout_state_tracker_v1"
+  private val COLLECTION_NAME = "dept_burnout_alertss"
+  private val CHECKPOINT_PATH = "checkpoints/burnout_state_trackeer"
   private val KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"
   private val INPUT_TOPIC = "employee-processed-stream"
 
@@ -37,6 +37,7 @@ object BurnoutAlertEngine {
       .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS)
       .option("subscribe", INPUT_TOPIC)
       .option("startingOffsets", "earliest")
+      .option("failOnDataLoss", "false")
       .load()
 
     val processedDF = kafkaRawDF.selectExpr("CAST(value AS STRING) as json")

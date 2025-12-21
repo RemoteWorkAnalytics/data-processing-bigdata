@@ -1,10 +1,10 @@
-package processing.ingestion
+package processing
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.Trigger
 import org.apache.spark.sql.types._
 import processing.cleaning.SparkCleaning
-import org.apache.spark.sql.streaming.Trigger
 
 object RawKafkaConsumer {
 
